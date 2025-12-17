@@ -47,7 +47,7 @@ async def upload_pdf(file: UploadFile = File(...)):
         UploadResponse with document ID and metadata
     """
     # Validate file type
-    if not file.filename.endswith('.pdf'):
+    if not file.filename or not file.filename.endswith('.pdf'):
         raise HTTPException(
             status_code=400,
             detail="Only PDF files are supported"

@@ -1,7 +1,7 @@
 /**
  * Component for uploading PDF files
  */
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { uploadPDF } from '../services/api';
 import type { UploadResponse } from '../types';
 
@@ -13,6 +13,7 @@ export default function PDFUpload({ onUploadSuccess }: PDFUploadProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -40,9 +41,10 @@ export default function PDFUpload({ onUploadSuccess }: PDFUploadProps) {
       const response = await uploadPDF(selectedFile);
       onUploadSuccess(response);
       setSelectedFile(null);
-      // Reset file input
-      const fileInput = document.getElementById('file-input') as HTMLInputElement;
-      if (fileInput) fileInput.value = '';
+      // Reset file input using ref
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Upload failed');
     } finally {
@@ -55,7 +57,7 @@ export default function PDFUpload({ onUploadSuccess }: PDFUploadProps) {
       <h2>Upload PDF Document</h2>
       <div className="upload-container">
         <input
-          id="file-input"
+          ref={fileInputRef}
           type="file"
           accept=".pdf"
           onChange={handleFileChange}
