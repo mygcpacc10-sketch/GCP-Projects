@@ -3,7 +3,7 @@
  */
 import { useState } from 'react';
 import { uploadPDF } from '../services/api';
-import { UploadResponse } from '../types';
+import type { UploadResponse } from '../types';
 
 interface PDFUploadProps {
   onUploadSuccess: (response: UploadResponse) => void;

@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import PDFUpload from './components/PDFUpload';
 import ChatInterface from './components/ChatInterface';
-import { UploadResponse } from './types';
+import type { UploadResponse } from './types';
 import './App.css';
 
 function App() {

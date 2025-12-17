@@ -3,7 +3,7 @@
  */
 import { useState, useRef, useEffect } from 'react';
 import { askQuestion } from '../services/api';
-import { Message } from '../types';
+import type { Message } from '../types';
 
 interface ChatInterfaceProps {
   documentId: string | null;

@@ -1,13 +1,15 @@
 /**
  * API service for communicating with the backend
  */
-import { UploadResponse, QuestionRequest, QuestionResponse } from '../types';
+import type { UploadResponse, QuestionResponse } from '../types';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
 
 class APIError extends Error {
-  constructor(public status: number, message: string) {
+  status: number;
+  constructor(status: number, message: string) {
     super(message);
+    this.status = status;
     this.name = 'APIError';
   }
 }
@@ -39,7 +41,7 @@ export async function askQuestion(
   documentId: string,
   question: string
 ): Promise<QuestionResponse> {
-  const requestBody: QuestionRequest = {
+  const requestBody = {
     document_id: documentId,
     question: question,
   };
